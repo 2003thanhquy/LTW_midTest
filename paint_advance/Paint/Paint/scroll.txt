@@ -1,0 +1,38 @@
+private void VScrollBar1_Scroll(object sender, ScrollEventArgs e)
+{
+    switch (e.Type)
+    {
+        case ScrollEventType.SmallIncrement:
+            // scroll down by one line
+            textBox1.SelectionStart += textBox1.GetFirstCharIndexFromLine(1);
+            textBox1.ScrollToCaret();
+            break;
+
+        case ScrollEventType.SmallDecrement:
+            // scroll up by one line
+            textBox1.SelectionStart -= textBox1.GetFirstCharIndexFromLine(1);
+            textBox1.ScrollToCaret();
+            break;
+
+        case ScrollEventType.LargeIncrement:
+            // scroll down by a calculated amount
+            int linesToScroll = textBox1.ClientSize.Height / textBox1.Font.Height;
+            textBox1.SelectionStart += textBox1.GetFirstCharIndexFromLine(linesToScroll);
+            textBox1.ScrollToCaret();
+            break;
+
+        case ScrollEventType.LargeDecrement:
+            // scroll up by a calculated amount
+            linesToScroll = textBox1.ClientSize.Height / textBox1.Font.Height;
+            textBox1.SelectionStart -= textBox1.GetFirstCharIndexFromLine(linesToScroll);
+            textBox1.ScrollToCaret();
+            break;
+
+        case ScrollEventType.ThumbTrack:
+        case ScrollEventType.ThumbPosition:
+            // scroll using the scrollbar value
+            textBox1.SelectionStart = textBox1.GetFirstCharIndexFromLine(vScrollBar1.Value);
+            textBox1.ScrollToCaret();
+            break;
+    }
+}

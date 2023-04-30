@@ -1,0 +1,11 @@
+F:\SPKT\LapTrinhWindows\Giua _Ky\paint_advance\Paint\Paint\bin\Debug\Paint.exe.config
+F:\SPKT\LapTrinhWindows\Giua _Ky\paint_advance\Paint\Paint\bin\Debug\Paint.exe
+F:\SPKT\LapTrinhWindows\Giua _Ky\paint_advance\Paint\Paint\bin\Debug\Paint.pdb
+F:\SPKT\LapTrinhWindows\Giua _Ky\paint_advance\Paint\Paint\obj\Debug\Paint.csproj.AssemblyReference.cache
+F:\SPKT\LapTrinhWindows\Giua _Ky\paint_advance\Paint\Paint\obj\Debug\Paint.csproj.SuggestedBindingRedirects.cache
+F:\SPKT\LapTrinhWindows\Giua _Ky\paint_advance\Paint\Paint\obj\Debug\Paint.Form1.resources
+F:\SPKT\LapTrinhWindows\Giua _Ky\paint_advance\Paint\Paint\obj\Debug\Paint.Properties.Resources.resources
+F:\SPKT\LapTrinhWindows\Giua _Ky\paint_advance\Paint\Paint\obj\Debug\Paint.csproj.GenerateResource.cache
+F:\SPKT\LapTrinhWindows\Giua _Ky\paint_advance\Paint\Paint\obj\Debug\Paint.csproj.CoreCompileInputs.cache
+F:\SPKT\LapTrinhWindows\Giua _Ky\paint_advance\Paint\Paint\obj\Debug\Paint.exe
+F:\SPKT\LapTrinhWindows\Giua _Ky\paint_advance\Paint\Paint\obj\Debug\Paint.pdb
