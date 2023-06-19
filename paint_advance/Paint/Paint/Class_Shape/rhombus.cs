@@ -6,12 +6,12 @@ namespace Paint.Class_Shape
     {
         public override void Draw(Graphics myGp, bool isFill)
         {
-            int x = (int)((lstPoints[1].X - lstPoints[0].X) / 2);
-            int y = (int)((lstPoints[1].Y - lstPoints[0].Y) / 2);
-            Point[] points = new Point[]{new Point(lstPoints[0].X + x, lstPoints[0].Y),
-                new Point(lstPoints[1].X, lstPoints[1].Y -y),
-                new Point(lstPoints[1].X -x, lstPoints[1].Y),
-                new Point(lstPoints[0].X, lstPoints[1].Y -y)
+            float x = ((lstPoints[1].X - lstPoints[0].X) / 2);
+            float y = ((lstPoints[1].Y - lstPoints[0].Y) / 2);
+            PointF[] points = new PointF[]{new PointF(lstPoints[0].X + x, lstPoints[0].Y),
+                new PointF(lstPoints[1].X, lstPoints[1].Y -y),
+                new PointF(lstPoints[1].X -x, lstPoints[1].Y),
+                new PointF(lstPoints[0].X, lstPoints[1].Y -y)
             };
             if (isFill)
             {

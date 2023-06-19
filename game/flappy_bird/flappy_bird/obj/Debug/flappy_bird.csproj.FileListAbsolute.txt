@@ -1,0 +1,11 @@
+F:\SPKT\LapTrinhWindows\Giua _Ky\game\flappy_bird\flappy_bird\bin\Debug\flappy_bird.exe.config
+F:\SPKT\LapTrinhWindows\Giua _Ky\game\flappy_bird\flappy_bird\bin\Debug\flappy_bird.exe
+F:\SPKT\LapTrinhWindows\Giua _Ky\game\flappy_bird\flappy_bird\bin\Debug\flappy_bird.pdb
+F:\SPKT\LapTrinhWindows\Giua _Ky\game\flappy_bird\flappy_bird\obj\Debug\flappy_bird.csproj.AssemblyReference.cache
+F:\SPKT\LapTrinhWindows\Giua _Ky\game\flappy_bird\flappy_bird\obj\Debug\flappy_bird.csproj.SuggestedBindingRedirects.cache
+F:\SPKT\LapTrinhWindows\Giua _Ky\game\flappy_bird\flappy_bird\obj\Debug\flappy_bird.Form1.resources
+F:\SPKT\LapTrinhWindows\Giua _Ky\game\flappy_bird\flappy_bird\obj\Debug\flappy_bird.Properties.Resources.resources
+F:\SPKT\LapTrinhWindows\Giua _Ky\game\flappy_bird\flappy_bird\obj\Debug\flappy_bird.csproj.GenerateResource.cache
+F:\SPKT\LapTrinhWindows\Giua _Ky\game\flappy_bird\flappy_bird\obj\Debug\flappy_bird.csproj.CoreCompileInputs.cache
+F:\SPKT\LapTrinhWindows\Giua _Ky\game\flappy_bird\flappy_bird\obj\Debug\flappy_bird.exe
+F:\SPKT\LapTrinhWindows\Giua _Ky\game\flappy_bird\flappy_bird\obj\Debug\flappy_bird.pdb

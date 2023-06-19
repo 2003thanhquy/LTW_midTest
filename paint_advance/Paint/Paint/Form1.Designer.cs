@@ -1,4 +1,6 @@
-﻿namespace Paint
+﻿using System.Reflection;
+
+namespace Paint
 {
     partial class Form1
     {
@@ -44,7 +46,7 @@
             this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem11 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnZoomout = new System.Windows.Forms.Button();
             this.btnZoomin = new System.Windows.Forms.Button();
             this.btnEraser = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
@@ -61,11 +63,15 @@
             this.btnHexagon = new System.Windows.Forms.Button();
             this.btnArc = new System.Windows.Forms.Button();
             this.btnPolygon = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btnOpenColor = new System.Windows.Forms.Button();
+            this.btnSelect = new System.Windows.Forms.Button();
+            this.btnGroup = new System.Windows.Forms.Button();
+            this.btnUngroup = new System.Windows.Forms.Button();
             this.pnlMain = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pnlPen = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnBrushStyle = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txtWidth = new System.Windows.Forms.TextBox();
@@ -75,7 +81,6 @@
             this.btnPenDStyle = new System.Windows.Forms.Button();
             this.panel6 = new System.Windows.Forms.Panel();
             this.pictureBox21 = new System.Windows.Forms.PictureBox();
-            this.btnOpenColor = new System.Windows.Forms.Button();
             this.pictureBox22 = new System.Windows.Forms.PictureBox();
             this.pictureBox23 = new System.Windows.Forms.PictureBox();
             this.pictureBox24 = new System.Windows.Forms.PictureBox();
@@ -108,19 +113,16 @@
             this.panel5 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
-            this.btnSelect = new System.Windows.Forms.Button();
-            this.btnGroup = new System.Windows.Forms.Button();
-            this.btnUngroup = new System.Windows.Forms.Button();
             this.ptbColor = new System.Windows.Forms.PictureBox();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.panel2 = new System.Windows.Forms.Panel();
             this.cMSDStyle.SuspendLayout();
             this.cMSBrush.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.pnlPen.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.panel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox21)).BeginInit();
@@ -233,7 +235,6 @@
             this.toolStripMenuItem11});
             this.cMSBrush.Name = "contextMenuStrip2";
             this.cMSBrush.Size = new System.Drawing.Size(212, 124);
-            this.cMSBrush.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.cMSBrush_ItemClicked);
             // 
             // toolStripMenuItem7
             // 
@@ -269,19 +270,19 @@
             // 
             this.toolTip1.AutomaticDelay = 50;
             // 
-            // button3
+            // btnZoomout
             // 
-            this.button3.BackgroundImage = global::Paint.Properties.Resources.zoomout_ss;
-            this.button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button3.Location = new System.Drawing.Point(276, 65);
-            this.button3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(60, 61);
-            this.button3.TabIndex = 5;
-            this.button3.Text = "\r\n";
-            this.toolTip1.SetToolTip(this.button3, "eraser");
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.btnZoomout.BackgroundImage = global::Paint.Properties.Resources.zoomout_ss;
+            this.btnZoomout.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnZoomout.Location = new System.Drawing.Point(276, 65);
+            this.btnZoomout.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnZoomout.Name = "btnZoomout";
+            this.btnZoomout.Size = new System.Drawing.Size(60, 61);
+            this.btnZoomout.TabIndex = 5;
+            this.btnZoomout.Text = "\r\n";
+            this.toolTip1.SetToolTip(this.btnZoomout, "zoomOut");
+            this.btnZoomout.UseVisualStyleBackColor = true;
+            this.btnZoomout.Click += new System.EventHandler(this.btnZoomout_Click);
             // 
             // btnZoomin
             // 
@@ -293,7 +294,7 @@
             this.btnZoomin.Size = new System.Drawing.Size(60, 57);
             this.btnZoomin.TabIndex = 4;
             this.btnZoomin.Text = "\r\n";
-            this.toolTip1.SetToolTip(this.btnZoomin, "Fill");
+            this.toolTip1.SetToolTip(this.btnZoomin, "zoomIn");
             this.btnZoomin.UseVisualStyleBackColor = true;
             this.btnZoomin.Click += new System.EventHandler(this.btnZoomin_Click);
             // 
@@ -367,7 +368,7 @@
             // 
             // pictureBox2
             // 
-            this.pictureBox2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox2.BackgroundImage")));
+            this.pictureBox2.BackgroundImage = global::Paint.Properties.Resources.brush;
             this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBox2.Location = new System.Drawing.Point(103, 38);
             this.pictureBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -482,6 +483,7 @@
             this.btnArc.TabIndex = 9;
             this.toolTip1.SetToolTip(this.btnArc, "Arc");
             this.btnArc.UseVisualStyleBackColor = true;
+            this.btnArc.Click += new System.EventHandler(this.btnArc_Click);
             // 
             // btnPolygon
             // 
@@ -496,6 +498,67 @@
             this.toolTip1.SetToolTip(this.btnPolygon, "Polygon");
             this.btnPolygon.UseVisualStyleBackColor = true;
             this.btnPolygon.Click += new System.EventHandler(this.btnPolygon_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox1.Location = new System.Drawing.Point(164, 38);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(63, 50);
+            this.pictureBox1.TabIndex = 2;
+            this.pictureBox1.TabStop = false;
+            this.toolTip1.SetToolTip(this.pictureBox1, "Brush");
+            // 
+            // btnOpenColor
+            // 
+            this.btnOpenColor.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnOpenColor.BackgroundImage")));
+            this.btnOpenColor.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnOpenColor.Location = new System.Drawing.Point(425, 27);
+            this.btnOpenColor.Name = "btnOpenColor";
+            this.btnOpenColor.Size = new System.Drawing.Size(90, 76);
+            this.btnOpenColor.TabIndex = 50;
+            this.toolTip1.SetToolTip(this.btnOpenColor, "More Colors");
+            this.btnOpenColor.UseVisualStyleBackColor = true;
+            this.btnOpenColor.Click += new System.EventHandler(this.btnOpenColor_Click);
+            // 
+            // btnSelect
+            // 
+            this.btnSelect.BackgroundImage = global::Paint.Properties.Resources.ic_select;
+            this.btnSelect.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnSelect.Location = new System.Drawing.Point(210, 66);
+            this.btnSelect.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnSelect.Name = "btnSelect";
+            this.btnSelect.Size = new System.Drawing.Size(60, 61);
+            this.btnSelect.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.btnSelect, "Select");
+            this.btnSelect.UseVisualStyleBackColor = true;
+            this.btnSelect.Click += new System.EventHandler(this.btnSelect_Click);
+            // 
+            // btnGroup
+            // 
+            this.btnGroup.BackgroundImage = global::Paint.Properties.Resources.ic_group;
+            this.btnGroup.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnGroup.Location = new System.Drawing.Point(3, 3);
+            this.btnGroup.Name = "btnGroup";
+            this.btnGroup.Size = new System.Drawing.Size(67, 59);
+            this.btnGroup.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.btnGroup, "Group");
+            this.btnGroup.UseVisualStyleBackColor = true;
+            this.btnGroup.Click += new System.EventHandler(this.btnGroup_Click);
+            // 
+            // btnUngroup
+            // 
+            this.btnUngroup.BackgroundImage = global::Paint.Properties.Resources.ungroup_objects;
+            this.btnUngroup.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnUngroup.Location = new System.Drawing.Point(76, 3);
+            this.btnUngroup.Name = "btnUngroup";
+            this.btnUngroup.Size = new System.Drawing.Size(62, 58);
+            this.btnUngroup.TabIndex = 2;
+            this.toolTip1.SetToolTip(this.btnUngroup, "UnGroup");
+            this.btnUngroup.UseVisualStyleBackColor = true;
+            this.btnUngroup.Click += new System.EventHandler(this.btnUngroup_Click);
             // 
             // pnlMain
             // 
@@ -569,17 +632,6 @@
             this.pnlPen.Name = "pnlPen";
             this.pnlPen.Size = new System.Drawing.Size(234, 133);
             this.pnlPen.TabIndex = 3;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackgroundImage = global::Paint.Properties.Resources.brush;
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox1.Location = new System.Drawing.Point(164, 38);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(63, 50);
-            this.pictureBox1.TabIndex = 2;
-            this.pictureBox1.TabStop = false;
             // 
             // btnBrushStyle
             // 
@@ -714,17 +766,6 @@
             this.pictureBox21.TabIndex = 47;
             this.pictureBox21.TabStop = false;
             this.pictureBox21.Click += new System.EventHandler(this.color_Click);
-            // 
-            // btnOpenColor
-            // 
-            this.btnOpenColor.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnOpenColor.BackgroundImage")));
-            this.btnOpenColor.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnOpenColor.Location = new System.Drawing.Point(425, 27);
-            this.btnOpenColor.Name = "btnOpenColor";
-            this.btnOpenColor.Size = new System.Drawing.Size(90, 76);
-            this.btnOpenColor.TabIndex = 50;
-            this.btnOpenColor.UseVisualStyleBackColor = true;
-            this.btnOpenColor.Click += new System.EventHandler(this.btnOpenColor_Click);
             // 
             // pictureBox22
             // 
@@ -1105,7 +1146,7 @@
             this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel7.Controls.Add(this.btnSelect);
             this.panel7.Controls.Add(this.btnClear);
-            this.panel7.Controls.Add(this.button3);
+            this.panel7.Controls.Add(this.btnZoomout);
             this.panel7.Controls.Add(this.btnZoomin);
             this.panel7.Controls.Add(this.btnEraser);
             this.panel7.Controls.Add(this.btnDelete);
@@ -1118,40 +1159,6 @@
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(346, 130);
             this.panel7.TabIndex = 49;
-            // 
-            // btnSelect
-            // 
-            this.btnSelect.BackgroundImage = global::Paint.Properties.Resources.ic_select;
-            this.btnSelect.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnSelect.Location = new System.Drawing.Point(210, 66);
-            this.btnSelect.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnSelect.Name = "btnSelect";
-            this.btnSelect.Size = new System.Drawing.Size(60, 61);
-            this.btnSelect.TabIndex = 0;
-            this.btnSelect.UseVisualStyleBackColor = true;
-            this.btnSelect.Click += new System.EventHandler(this.btnSelect_Click);
-            // 
-            // btnGroup
-            // 
-            this.btnGroup.BackgroundImage = global::Paint.Properties.Resources.ic_group;
-            this.btnGroup.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnGroup.Location = new System.Drawing.Point(3, 3);
-            this.btnGroup.Name = "btnGroup";
-            this.btnGroup.Size = new System.Drawing.Size(67, 59);
-            this.btnGroup.TabIndex = 1;
-            this.btnGroup.UseVisualStyleBackColor = true;
-            this.btnGroup.Click += new System.EventHandler(this.btnGroup_Click);
-            // 
-            // btnUngroup
-            // 
-            this.btnUngroup.BackgroundImage = global::Paint.Properties.Resources.ungroup_objects;
-            this.btnUngroup.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnUngroup.Location = new System.Drawing.Point(76, 3);
-            this.btnUngroup.Name = "btnUngroup";
-            this.btnUngroup.Size = new System.Drawing.Size(62, 58);
-            this.btnUngroup.TabIndex = 2;
-            this.btnUngroup.UseVisualStyleBackColor = true;
-            this.btnUngroup.Click += new System.EventHandler(this.btnUngroup_Click);
             // 
             // ptbColor
             // 
@@ -1182,17 +1189,19 @@
             this.ClientSize = new System.Drawing.Size(1581, 757);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel5);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.MaximizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.cMSDStyle.ResumeLayout(false);
             this.cMSBrush.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.pnlPen.ResumeLayout(false);
             this.pnlPen.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.panel6.ResumeLayout(false);
@@ -1317,7 +1326,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem11;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnZoomout;
         private System.Windows.Forms.Button btnZoomin;
         private System.Windows.Forms.Panel panel2;
     }

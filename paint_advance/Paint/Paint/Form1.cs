@@ -19,8 +19,8 @@ namespace Paint
         bool isObjMove = false; // duy chuyen doi tuong
         bool isPolygon = false;
         bool isPen = false;
-        Point pointStart;
-        float zoom = 1f;
+        PointF pointStart;
+        //float zoom = 1f;
 
         DashStyle dashStyle = DashStyle.Solid;
         Brush brushStyle = new SolidBrush(Color.Black);
@@ -35,14 +35,29 @@ namespace Paint
         public Form1()
         {
             InitializeComponent();
+            this.cMSBrush.ItemClicked += (sender, e) =>
+            {
+                int index = -1;
+                cMSBrush_ItemClicked(sender, e, index);
+            };
             this.pnlMain.SetDoubleBuffered();
         }
         public clsDrawObject Init_Object(clsDrawObject drawOject)
         {
+            if (isSelected)
+            {
+                drawOject.myPen = new Pen(Color.Black, 3);
+                drawOject.myPen.DashStyle = DashStyle.Dot;
+                return drawOject;
+            }
             drawOject.myPen = new Pen(ptbColor.BackColor, Int32.Parse(txtWidth.Text));
+
             drawOject.myPen.DashStyle = dashStyle;
             drawOject.myColor = ptbColor.BackColor;
-            drawOject.myBrush = brushStyle;
+            if (brushStyle is SolidBrush) cMSBrush_ItemClicked(null, null, 0);
+            if ( brushStyle is HatchBrush ) cMSBrush_ItemClicked(null, null, 1);
+            if (brushStyle is LinearGradientBrush) cMSBrush_ItemClicked(null, null, 2);
+            drawOject.myBrush = brushStyle; 
             drawOject.isFill = isFill;
             return drawOject;
         }
@@ -68,56 +83,56 @@ namespace Paint
             cMSDStyle.Show(btnPenDStyle, new Point(0, btnPenDStyle.Height));
         }
 
-        private void moveCoordAllOfOgroup(clsDrawObject clsObj, int x, int y)
+        private void moveCoordAllOfOgroup(clsDrawObject clsObj, float x, float y)
         {
             for (int i = 0; i < clsObj.lstPoints.Count; i++)
             {
-                Point p = clsObj.lstPoints[i];
-                clsObj.lstPoints[i] = new Point(p.X + x, p.Y + y);
+                PointF p = clsObj.lstPoints[i];
+                clsObj.lstPoints[i] = new PointF(p.X + x, p.Y + y);
             }
             clsObj.getGroup().ForEach(obj =>
             {
                 moveCoordAllOfOgroup(obj, x, y);
             });
         }
-        private clsDrawObject moveObject(clsDrawObject clsObj, Point start, Point end)
+        private clsDrawObject moveObject(clsDrawObject clsObj, PointF start, PointF end)
         {
             this.pointStart = end;
-            int x = end.X - start.X;
-            int y = end.Y - start.Y;
+            float x = end.X - start.X;
+            float y = end.Y - start.Y;
             moveCoordAllOfOgroup(clsObj, x, y);
             clsObj.calculateResizePoints();
             return clsObj;
         }
-        private void resizeObject(clsDrawObject clsObj, int ind, int x, int y)
+        private void resizeObject(clsDrawObject clsObj, int ind, float x, float y)
         {
             switch (ind)
             {
                 case 0:
-                    clsObj.lstPoints[0] = new Point(clsObj.lstPoints[0].X + x, clsObj.lstPoints[0].Y + y);
+                    clsObj.lstPoints[0] = new PointF(clsObj.lstPoints[0].X + x, clsObj.lstPoints[0].Y + y);
                     break;
                 case 4:
-                    clsObj.lstPoints[1] = new Point(clsObj.lstPoints[1].X + x, clsObj.lstPoints[1].Y + y);
+                    clsObj.lstPoints[1] = new PointF(clsObj.lstPoints[1].X + x, clsObj.lstPoints[1].Y + y);
                     break;
                 case 2:
-                    clsObj.lstPoints[0] = new Point(clsObj.lstPoints[0].X, clsObj.lstPoints[0].Y + y);
-                    clsObj.lstPoints[1] = new Point(clsObj.lstPoints[1].X + x, clsObj.lstPoints[1].Y);
+                    clsObj.lstPoints[0] = new PointF(clsObj.lstPoints[0].X, clsObj.lstPoints[0].Y + y);
+                    clsObj.lstPoints[1] = new PointF(clsObj.lstPoints[1].X + x, clsObj.lstPoints[1].Y);
                     break;
                 case 6:
-                    clsObj.lstPoints[0] = new Point(clsObj.lstPoints[0].X + x, clsObj.lstPoints[0].Y);
-                    clsObj.lstPoints[1] = new Point(clsObj.lstPoints[1].X, clsObj.lstPoints[1].Y + y);
+                    clsObj.lstPoints[0] = new PointF(clsObj.lstPoints[0].X + x, clsObj.lstPoints[0].Y);
+                    clsObj.lstPoints[1] = new PointF(clsObj.lstPoints[1].X, clsObj.lstPoints[1].Y + y);
                     break;
                 case 1:
-                    clsObj.lstPoints[0] = new Point(clsObj.lstPoints[0].X, clsObj.lstPoints[0].Y + y);
+                    clsObj.lstPoints[0] = new PointF(clsObj.lstPoints[0].X, clsObj.lstPoints[0].Y + y);
                     break;
                 case 5:
-                    clsObj.lstPoints[1] = new Point(clsObj.lstPoints[1].X, clsObj.lstPoints[1].Y + y);
+                    clsObj.lstPoints[1] = new PointF(clsObj.lstPoints[1].X, clsObj.lstPoints[1].Y + y);
                     break;
                 case 7:
-                    clsObj.lstPoints[0] = new Point(clsObj.lstPoints[0].X + x, clsObj.lstPoints[0].Y);
+                    clsObj.lstPoints[0] = new PointF(clsObj.lstPoints[0].X + x, clsObj.lstPoints[0].Y);
                     break;
                 case 3:
-                    clsObj.lstPoints[1] = new Point(clsObj.lstPoints[1].X + x, clsObj.lstPoints[1].Y);
+                    clsObj.lstPoints[1] = new PointF(clsObj.lstPoints[1].X + x, clsObj.lstPoints[1].Y);
                     break;
                 default: break;
             }
@@ -128,21 +143,21 @@ namespace Paint
             });
 
         }
-        private void resizeObjectAllOfGroup(clsDrawObject clsObj, int ind, Point start, Point end)
+        private void resizeObjectAllOfGroup(clsDrawObject clsObj, int ind, PointF start, PointF end)
         {
             this.pointStart = end;
-            int x = end.X - start.X;
-            int y = end.Y - start.Y;
+            float x = end.X - start.X;
+            float y = end.Y - start.Y;
             resizeObject(clsObj, ind, x, y);
 
         }
-        public void searchLocationResize(Point e)
+        public void searchLocationResize(PointF e)
         {
             this.lstSelected.ForEach(x =>
             {
                 for (int i = 0; i < 8; i++)
                 {
-                    Rectangle r = new Rectangle(x.recResize[i].X, x.recResize[i].Y, 8, 8);
+                    RectangleF r = new RectangleF(x.recResize[i].X, x.recResize[i].Y, 8, 8);
                     if (r.Contains(e))
                     {
                         this.pointStart = e;
@@ -261,7 +276,6 @@ namespace Paint
                 isPen = false;
                 objectCurr = null;
                 isPress = false;
-                btnPen_Click(null, null); ;
                 return;
             }
             
@@ -275,8 +289,8 @@ namespace Paint
             }
             if (isSelected)
             {
-                Point p1 = this.lstObject[this.lstObject.Count - 1].lstPoints[0];
-                Point p2 = this.lstObject[this.lstObject.Count - 1].lstPoints[1];
+                PointF p1 = this.lstObject[this.lstObject.Count - 1].lstPoints[0];
+                PointF p2 = this.lstObject[this.lstObject.Count - 1].lstPoints[1];
 
                 this.lstObject.RemoveAt(this.lstObject.Count - 1);
                 isSelected = false;
@@ -284,11 +298,11 @@ namespace Paint
                 isObjSelected = true;
                 this.pnlMain.Refresh();
 
-                Rectangle r = new Rectangle(p1.X,p1.Y,p2.X-p1.X,p2.Y-p1.Y);    
+                RectangleF r = new RectangleF(p1.X,p1.Y,p2.X-p1.X,p2.Y-p1.Y);    
                 this.lstSelected = this.lstObject.Where(x =>
                 {
                     var p = x.getStartAndEndPoints();
-                    Rectangle r_curr = new Rectangle(p.Item1.X, p.Item1.Y, p.Item2.X - p.Item1.X, p.Item2.Y - p.Item2.Y);
+                    RectangleF r_curr = new RectangleF(p.Item1.X, p.Item1.Y, p.Item2.X - p.Item1.X, p.Item2.Y - p.Item2.Y);
                     return r.Contains(r_curr);
                 }).ToList();
                 this.pnlMain.Refresh();
@@ -297,8 +311,10 @@ namespace Paint
         }
         private void drawObject(clsDrawObject objDraw, Graphics e)
         {
+           
             if (objDraw.getGroup().Count == 0)
             {
+                e.SmoothingMode = SmoothingMode.AntiAlias;         
                 objDraw.Draw(e, objDraw.isFill);
                 return;
             }
@@ -310,13 +326,9 @@ namespace Paint
         private void pnlMain_Paint(object sender, PaintEventArgs e)
         {
            
-            Graphics g = e.Graphics;
-            g.SmoothingMode = SmoothingMode.AntiAlias;
-            g.ScaleTransform(zoom, zoom);
             lstObject.ForEach(obj =>
-            {
-                
-                drawObject(obj, g);
+            {              
+                drawObject(obj, e.Graphics);
             });
             if (isObjSelected)
             {
@@ -326,8 +338,8 @@ namespace Paint
                     var p = obj.getStartAndEndPoints();
                     obj.calculateResizePoints();
 
-                    Rectangle r = new Rectangle(p.Item1.X - 5, p.Item1.Y - 5, p.Item2.X - p.Item1.X + 10, p.Item2.Y - p.Item1.Y + 10);
-                    obj.DrawResizableRectangle(g, r);
+                    RectangleF r = new RectangleF(p.Item1.X - 5, p.Item1.Y - 5, p.Item2.X - p.Item1.X + 10, p.Item2.Y - p.Item1.Y + 10);
+                    obj.DrawResizableRectangle(e.Graphics, r);
 
                 });
 
@@ -352,21 +364,47 @@ namespace Paint
             resetVar();
             objectCurr = new clsEllipse();
         }
-
         private void btnRectangle_Click(object sender, EventArgs e)
         {
             resetVar();
             objectCurr = new clsRectangle();
         }
-
+        private void btnTriangle_Click(object sender, EventArgs e)
+        {
+            resetVar();
+            objectCurr = new clsTriangle();
+        }
+        private void btnRhombus_Click(object sender, EventArgs e)
+        {
+            resetVar();
+            objectCurr = new clsRhombus();
+        }
+        private void btnPentagon_Click(object sender, EventArgs e)
+        {
+            resetVar();
+            objectCurr = new clsPentagon();
+        }
+        private void btnHexagon_Click(object sender, EventArgs e)
+        {
+            resetVar();
+            objectCurr = new clsHexagon();
+        }
+        private void btnPolygon_Click(object sender, EventArgs e)
+        {
+            resetVar();
+            isPolygon = true;
+            objectCurr = new clsPolygon();
+        }
+        private void btnArc_Click(object sender, EventArgs e)
+        {
+            resetVar();
+            objectCurr = new clsArc();
+        }
         private void btnSelect_Click(object sender, EventArgs e)
         {
             resetVar();
-            if (isFill == true) btnFill_Click(null, null);
             isSelected = true;
-            objectCurr = new clsRectangle();
-            dashStyle = DashStyle.Dot;
-
+            objectCurr = new clsRectangle();  
         }
 
         private void cMSDStyle_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -425,28 +463,22 @@ namespace Paint
             }
         }
 
-        private void btnTriangle_Click(object sender, EventArgs e)
-        {
-            resetVar();
-            objectCurr = new clsTriangle();
-        }
-
         private void btnGroup_Click(object sender, EventArgs e)
         {
             if (lstSelected.Count > 1)
             {
                 clsDrawObject objGroup = new clsDrawObject();
                 objGroup.CreateGroupObject(lstSelected);
-                int x_min = lstSelected.Min(x => x.lstPoints.Min(p => p.X));
-                int y_min = lstSelected.Min(y => y.lstPoints.Min(p => p.Y));
-                int x_max = lstSelected.Max(x => x.lstPoints.Max(p => p.X));
-                int y_max = lstSelected.Max(y => y.lstPoints.Max(p => p.Y));
+                float x_min = lstSelected.Min(x => x.lstPoints.Min(p => p.X));
+                float y_min = lstSelected.Min(y => y.lstPoints.Min(p => p.Y));
+                float x_max = lstSelected.Max(x => x.lstPoints.Max(p => p.X));
+                float y_max = lstSelected.Max(y => y.lstPoints.Max(p => p.Y));
                 lstSelected.ForEach(obj =>
                 {
                     lstObject.Remove(obj);
                 });
-                objGroup.lstPoints.Add(new Point(x_min, y_min));
-                objGroup.lstPoints.Add(new Point(x_max, y_max));
+                objGroup.lstPoints.Add(new PointF(x_min, y_min));
+                objGroup.lstPoints.Add(new PointF(x_max, y_max));
                 lstObject.Add(objGroup);
                 lstSelected.Clear();
                 lstSelected.Add(objGroup);
@@ -484,36 +516,10 @@ namespace Paint
                 ptbColor.BackColor = color;
             }
         }
-
         private void color_Click(object sender, EventArgs e)
         {
             PictureBox clr = (PictureBox)sender;
             ptbColor.BackColor = clr.BackColor;
-        }
-
-        private void btnRhombus_Click(object sender, EventArgs e)
-        {
-            resetVar();
-            objectCurr = new clsRhombus();
-        }
-
-        private void btnPentagon_Click(object sender, EventArgs e)
-        {
-            resetVar();
-            objectCurr = new clsPentagon();
-        }
-
-        private void btnHexagon_Click(object sender, EventArgs e)
-        {
-            resetVar();
-            objectCurr = new clsHexagon();
-        }
-
-        private void btnPolygon_Click(object sender, EventArgs e)
-        {
-            resetVar();
-            isPolygon = true;
-            objectCurr = new clsPolygon();
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -528,10 +534,11 @@ namespace Paint
 
         private void btnPen_Click(object sender, EventArgs e)
         {
+            resetVar();
             isPen = true;
             objectCurr = new clsPen();
+            
         }
-
         private void btnEraser_Click(object sender, EventArgs e)
         {
 
@@ -548,9 +555,10 @@ namespace Paint
             cMSBrush.Show(btnBrushStyle, new Point(0, btnBrushStyle.Height));
         }
 
-        private void cMSBrush_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        private void cMSBrush_ItemClicked(object sender, ToolStripItemClickedEventArgs e,int index = -1)
         {
-            int index = this.cMSBrush.Items.IndexOf(e.ClickedItem);
+            if(index ==-1)
+                index = this.cMSBrush.Items.IndexOf(e.ClickedItem);
             switch (index)
             {
                 case 0:
@@ -582,24 +590,55 @@ namespace Paint
             this.pnlMain.Refresh();
 
         }
+        private void zoom(clsDrawObject obj, float factor)
+        {
 
+            if (obj.getGroup().Count ==0)
+            {
+                obj.myPen.Width *= factor;
+                var lstPoint = obj.lstPoints;
+                for (int i = 0; i < lstPoint.Count(); i++)
+                {
+                    lstPoint[i] = new PointF(lstPoint[i].X * factor, lstPoint[i].Y * factor);
+                }
+                return;
+            }
+            foreach(var x in obj.getGroup())
+                zoom(x,factor);
+            
+
+        }
         private void btnZoomin_Click(object sender, EventArgs e)
         {
             pnlMain.Scale(new SizeF(2.0f, 2.0f));
-            zoom *= 2;
-            //pnlMain.Location = new Point(0, 0);
+            foreach (var obj in lstObject)
+            {
+                zoom(obj, 2.0f);
+                if (obj.getGroup().Count !=0)
+                {
+                    obj.lstPoints[0] = new PointF(obj.lstPoints[0].X * 2, obj.lstPoints[0].Y * 2);
+                    obj.lstPoints[1] = new PointF(obj.lstPoints[1].X * 2, obj.lstPoints[1].Y * 2);
+
+                }
+            }
             pnlMain.Refresh();
-
         }
-
-        private void button3_Click(object sender, EventArgs e)
+        private void btnZoomout_Click(object sender, EventArgs e)
         {
             pnlMain.Scale(new SizeF(0.5f, 0.5f));
-            zoom /= 2;
+            foreach (var obj in lstObject)
+            {
+                zoom(obj, 0.5f);
+                if (obj.getGroup().Count != 0)
+                {
+                    obj.lstPoints[0] = new PointF(obj.lstPoints[0].X / 2, obj.lstPoints[0].Y / 2);
+                    obj.lstPoints[1] = new PointF(obj.lstPoints[1].X / 2, obj.lstPoints[1].Y / 2);
+
+                }
+
+            }
             pnlMain.Refresh();
         }
+
     }
 }
-
-//zoom in , zoom out la tang  kich thuoc cua panel // scroll la ok
-//https://stackoverflow.com/questions/32204274/panel-drawing-zoom-in-c-sharp

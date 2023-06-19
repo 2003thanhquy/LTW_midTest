@@ -57,7 +57,6 @@
     <Compile Include="Class_Shape\rhombus.cs" />
     <Compile Include="Class_Shape\shapeObject.cs" />
     <Compile Include="Class_Shape\triangle.cs" />
-    <Compile Include="func\clsGroup.cs" />
     <Compile Include="RoundButton.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -6,7 +6,12 @@ namespace Paint.Class_Shape
     {
         public override void Draw(Graphics myGp, bool isFill)
         {
-            myGp.DrawLines(myPen, lstPoints.ToArray());
+            try
+            {
+                myGp.DrawLines(myPen, lstPoints.ToArray());
+            }
+            catch { }
+            
         }
     }
 }

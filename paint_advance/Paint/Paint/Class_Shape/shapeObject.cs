@@ -7,13 +7,14 @@ namespace Paint.Class_Shape
 {
     public class clsDrawObject
     {
-        public List<Point> lstPoints = new List<Point>();
+        public List<PointF> lstPoints = new List<PointF>();
         public bool isFill;
         public int numOfPoints = 0;
         public Pen myPen;//dash style, width ,color
         public Color myColor;
         public Brush myBrush;
-        public Point[] recResize = new Point[8];
+        public float zoom = 1;
+        public PointF[] recResize = new PointF[8];
         List<clsDrawObject> lstGroups = new List<clsDrawObject>();
 
 
@@ -21,16 +22,16 @@ namespace Paint.Class_Shape
 
         public void updatePoints()
         {
-            int x_min = Math.Min(lstPoints[0].X, lstPoints[1].X), y_min = Math.Min(lstPoints[0].Y, lstPoints[1].Y);
-            int x_max = Math.Max(lstPoints[0].X, lstPoints[1].X), y_max = Math.Max(lstPoints[0].Y, lstPoints[1].Y);
-            this.lstPoints[0] = new Point(x_min, y_min);
-            this.lstPoints[1] = new Point(x_max, y_max);
+            float x_min = Math.Min(lstPoints[0].X, lstPoints[1].X), y_min = Math.Min(lstPoints[0].Y, lstPoints[1].Y);
+            float x_max = Math.Max(lstPoints[0].X, lstPoints[1].X), y_max = Math.Max(lstPoints[0].Y, lstPoints[1].Y);
+            this.lstPoints[0] = new PointF(x_min, y_min);
+            this.lstPoints[1] = new PointF(x_max, y_max);
 
         }
-        public (Point, Point) getStartAndEndPoints()
+        public (PointF, PointF) getStartAndEndPoints()
         {
-            int x_min = lstPoints[0].X, x_max = lstPoints[0].X;
-            int y_min = lstPoints[0].Y, y_max = lstPoints[0].Y;
+            float x_min = lstPoints[0].X, x_max = lstPoints[0].X;
+            float y_min = lstPoints[0].Y, y_max = lstPoints[0].Y;
             foreach (var p in lstPoints)
             {
                 if (p.X < x_min) x_min = p.X;
@@ -38,29 +39,30 @@ namespace Paint.Class_Shape
                 if (p.Y < y_min) y_min = p.Y;
                 if (p.Y > y_max) y_max = p.Y;
             }
-            Point pointStart = new Point(x_min, y_min);
-            Point pointEnd = new Point(x_max, y_max);
+            PointF pointStart = new PointF(x_min, y_min);
+            PointF pointEnd = new PointF(x_max, y_max);
             return (pointStart, pointEnd);
         }
         public void calculateResizePoints()
         {
             var p = getStartAndEndPoints();
 
-            recResize[0] = new Point(p.Item1.X - 9, p.Item1.Y - 9);
-            recResize[1] = new Point((int)((p.Item1.X + p.Item2.X) / 2 - 9), p.Item1.Y - 9);
-            recResize[2] = new Point(p.Item2.X + 1, p.Item1.Y - 9);
-            recResize[3] = new Point(p.Item2.X + 1, (int)((p.Item1.Y + p.Item2.Y) / 2) - 9);
-            recResize[4] = new Point(p.Item2.X + 1, p.Item2.Y + 1);
-            recResize[5] = new Point((int)((p.Item1.X + p.Item2.X) / 2) - 9, p.Item2.Y + 1);
-            recResize[6] = new Point(p.Item1.X - 9, p.Item2.Y + 1);
-            recResize[7] = new Point(p.Item1.X - 9, (int)((p.Item1.Y + p.Item2.Y) / 2) - 9);
+            recResize[0] = new PointF(p.Item1.X - 9, p.Item1.Y - 9);
+            recResize[1] = new PointF((int)((p.Item1.X + p.Item2.X) / 2 - 9), p.Item1.Y - 9);
+            recResize[2] = new PointF(p.Item2.X + 1, p.Item1.Y - 9);
+            recResize[3] = new PointF(p.Item2.X + 1, (int)((p.Item1.Y + p.Item2.Y) / 2) - 9);
+            recResize[4] = new PointF(p.Item2.X + 1, p.Item2.Y + 1);
+            recResize[5] = new PointF((int)((p.Item1.X + p.Item2.X) / 2) - 9, p.Item2.Y + 1);
+            recResize[6] = new PointF(p.Item1.X - 9, p.Item2.Y + 1);
+            recResize[7] = new PointF(p.Item1.X - 9, (int)((p.Item1.Y + p.Item2.Y) / 2) - 9);
         }
-        public void DrawResizableRectangle(Graphics gp, Rectangle r)
+        public void DrawResizableRectangle(Graphics gp, RectangleF r)
         {
             for (int i = 0; i < 8; i++)
             {
-                ControlPaint.DrawBorder(gp, r, Color.Blue, ButtonBorderStyle.Dotted);
-                gp.FillRectangle(new SolidBrush(Color.Black), new Rectangle(recResize[i].X, recResize[i].Y, 8, 8));
+                Rectangle rect = Rectangle.Round(r);
+                ControlPaint.DrawBorder(gp, rect, Color.Blue, ButtonBorderStyle.Dotted);
+                gp.FillRectangle(new SolidBrush(Color.Black), new RectangleF(recResize[i].X, recResize[i].Y, 8, 8));
             }
         }
         public List<clsDrawObject> getGroup()
@@ -69,8 +71,6 @@ namespace Paint.Class_Shape
         }
         public void CreateGroupObject(List<clsDrawObject> lstObjSelected)
         {
-            //remove nhung group duoc chon khoi group 
-            //tao new group 
             this.lstGroups.AddRange(lstObjSelected);
         }
         public List<clsDrawObject> UngroupObjects(List<clsDrawObject> lstObjSelected)
